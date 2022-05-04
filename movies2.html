@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+        
+    <style>
+        /* input{
+            width: 200px;  
+            padding: 5px; 
+            
+        } */
+
+        #movies{
+            height: 200px;
+            width: 179px;
+            border: 1px solid white;
+            color: aliceblue;
+            overflow: hidden;
+            margin-left: 550px;
+            font-size: 20px;
+             
+        }
+
+
+
+        body{
+            background-image: url(https://ak.picdn.net/shutterstock/videos/9338627/thumb/1.jpg?ip=x480);
+        }
+#container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+    margin: auto;
+    padding-left: 60px;
+    
+   
+   
+
+}
+
+#query{
+    padding: 5px;
+    padding-left: 20px;
+   padding-right: 90px;
+   margin-left: 550px;
+   margin-top: 20px;
+   padding: 5px;
+   border-radius: 10px;
+ margin-bottom: 30px;
+   
+   
+
+}
+
+
+#sea{
+    padding: 6px;
+}
+
+
+#movie{
+    
+    width: 500px;
+    height: 200px;
+     
+    
+    
+}
+
+#new{
+    color: aliceblue;
+
+}
+
+#new1{
+    color: aliceblue;
+     
+}
+/* input{
+    width: 20%;
+} */
+
+ 
+#my{
+    margin-bottom: 100px;
+}
+    </style>
+</head>
+<body>
+    <div id="my"> 
+    <input type="text" oninput="debounce(main,3000)" id="query">
+    <!-- <button onclick="searchmovie()" id="sea">Search</button> -->
+    <div id="movies" ></div>
+    </div>
+
+    <div id="container"></div>
+    
+</body>
+</html>
+
+
+<script>
+   
+   
+
+
+
+    async function searchmovie(){
+             try {
+                 
+                var filmName = document.getElementById("query").value
+                var res = await fetch(`http://www.omdbapi.com/?apikey=8e2cdc3&s=${filmName}`)
+
+                var data = await res.json()
+                console.log(data)
+                return data.Search
+                 
+             } catch (error) {
+                 console.log(error)
+             }
+         }
+ 
+       
+      async function main(){
+
+          var movies = document.getElementById("movies")
+          movies.innerHTML=""
+
+       var data=   await searchmovie()
+
+       if(data === undefined){
+           return false
+       }
+
+       console.log(data)
+       appenddata(data)
+
+       }
+
+
+       var time;
+
+function   debounce(func,delay){
+    if(time){
+        clearTimeout(time)
+    }
+
+     var time= setTimeout(function(){
+          func()
+
+      },delay)
+}
+
+var container = document.getElementById("container")
+  var movies_div = document.getElementById("movies")
+       function appenddata(movies){
+         
+        var container = document.getElementById("container")
+        container.innerHTML=""
+  
+           movies.forEach(function(el){
+
+
+
+               let  p = document.createElement("p")
+               p.innerText=el.Title
+
+
+               let div = document.createElement("div")
+
+                let poster = document.createElement("img")
+                poster.src= el.Poster
+                poster.setAttribute("id","moive")
+                
+
+                let p2 = document.createElement("h1")
+                p2.innerText= el.Title
+                p2.setAttribute("id","new")
+                p2.onclick=function(event){
+                    names(el)
+                }
+
+
+
+                let p1 = document.createElement("h3")
+                p1.innerText= el.Year
+                p1.setAttribute("id","new1")
+
+               movies_div.append(p)
+
+               div.append(poster,p2,p1)
+            container.append(div)
+
+           })
+       }
+
+ var time;
+
+ function   debounce(func,delay){
+     if(time){
+         clearTimeout(time)
+     }
+
+      var time= setTimeout(function(){
+      
+           func()
+
+       },delay)
+
+       function names(el){
+
+appenddata(data)
+   
+    }
+ }
+
+  
+
+
+
+
+
+ 
+ 
+
+
+
+  function names(el){
+ 
+ appenddata(data)
+     
+     
+  }
+
+
+ 
+
+
+          
+  
+
+ </script>
